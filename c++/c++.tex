@@ -1,2 +1,70 @@
 \chapter{C++}
 
+\section{compile code} 
+% using g++/clang
+
+\subsection{makefile} 
+
+\section{Libraries} 
+%locations
+%LD_LIBRARY
+%ldd command
+
+\section{Coding standard} 
+\subsection{clang-format}
+\subsection{vim integration}
+\subsection{automation - git hooks}
+
+
+\section{Static Error Check} 
+\subsection{clang-tidy}
+\subsection{vim integration}
+\subsection{automation - git hooks}
+
+\section{Move Semantics} 
+
+\subsection{Value Categories} 
+
+The example code is \texttt{./c++/source/moveSematics/lrValues.cpp}.
+
+\subsubsection{L-value} 
+
+\begin{itemize}
+    \item has a name
+    \begin{itemize}
+      \item all variables
+    \end{itemize}
+    \item can be assigned values
+    \item some expressions return l-value
+    \begin{itemize}
+      \item persists beyond the expression
+    \end{itemize}
+    \item some functions return l-value
+    \item l-value reference - reference to l-value
+\end{itemize}
+
+\subsubsection{R-value} 
+
+\begin{itemize}
+    \item does not have a name
+    \item a temporary value
+    \item some expressions return r-value
+    \begin{itemize}
+      \item does not persist beyond the expression
+    \end{itemize}
+    \item some functions return r-value
+    \item r-value reference - reference to r-value (introduced in C++ 11)
+\end{itemize}
+
+A function overloading can be done with l-value and r-value
+
+\subsubsection{R-value References} 
+
+\begin{itemize}
+    \item Introduced for move semantics
+    \item A reference created to a temporary.
+    \begin{itemize}
+      \item Represents a temporary
+    \end{itemize}
+  \item Created with \texttt{&&}
+\end{itemize}
