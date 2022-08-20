@@ -1,7 +1,9 @@
 #!/bin/bash
 #-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*"
-#         File: make_thesis.sh
-#               Create pdf and docx files
+#         File: make.sh
+#               Create pdf file
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 pdflatex main.tex
+
+xdg-open main.pdf
