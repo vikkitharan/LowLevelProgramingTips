@@ -1,7 +1,10 @@
 \chapter{Debug}
-% TODO [vikki @22/08/25]: write about debug. %
+Here is my expericence, tips and tricks about debugging C/C++ programs.
+I used gdb, valgrind and other debuging tools more thand several years.
 
-\section{gdb - The GNU Debugger}
+\section{GDB: The GNU Debugger}
+
+
 % TODO [vikki @22/08/24]: what gdb ref command does. %
 
 From the man page, (\texttt{\$ man gdb});
@@ -10,7 +13,6 @@ The purpose of a debugger such as GDB is to allow you to see what is going on ``
 
 GDB can do four main kinds of things (plus other things in support of these) to help you catch bugs in the act:
 
-\subsection{Bullet points}
 \begin{enumerate}
   \item Start your program, specifying anything that might affect its behavior.
   \item Make your program stop on specified conditions.
@@ -30,9 +32,17 @@ You can use GDB to debug programs written in C, C++, Fortran and Modula-2.
   \item \texttt{man gdb}
   \item \href{https://sourceware.org/gdb/download/onlinedocs/}{Dowload pdf version of Documentation for GDB}
   \item \href{https://developer.apple.com/library/archive/documentation/DeveloperTools/gdb/gdb/gdb_toc.html}{html version of Documentation for GDB}
-  \item \href{https://developer.apple.com/library/archive/documentation/DeveloperTools/gdb/gdb/gdb_toc.html}{html version of Documentation for GDB}
 
 \end{itemize}
+
+
+\subsection{Compile the code with debug information}
+\texttt{g++ -g3 -O0 debug/source/buildWithDebug.cpp -o debug/bin/buildWithDebug} compiles the source code with debug information.
+
+
+You can check if the binary is build with debug information and not stripped by \texttt{file debug/bin/buildWithDebug}.
+
+To compare how much the binary size increases by debug information you can use \texttt{ls -l debug/bin/buildWithDebug} with and without debug information.
 
 
 \subsubsection{Debugging Options}
@@ -48,34 +58,11 @@ For extensive details about other options and support other debugger than gdb, p
   \item \texttt{-g3} includes extra information, such as all the macro definitions present in the program.  Some debuggers support macro expansion when you use this option.
 \end{enumerate}
 
-\subsection{Building code with debug information}
-\texttt{g++ -g debug/source/buildWithDebug.cpp -o debug/bin/buildWithDebug} compiles the source code with debug information.
+For the best debugging, if possible compile the code without optimization option \texttt{-O0}.
 
 
-You can check if the binary is build with debug information and not stripped by \texttt{file debug/bin/buildWithDebug}.
-
-To compare how much the binary size increases by debug information you can use \texttt{ls -l debug/bin/buildWithDebug} with and without debug information.
-
-\subsection{Some of the most frequently needed gdb command}
-
-\begin{itemize}
-  \item \texttt{gdg}: start the gdb
-  \item \texttt{b/break}: add break points
-  \item \texttt{r/run}: execute the program
-  \item \texttt{w/watch}: add watch points
-  \item \texttt{p/print}: view the variables
-  \item \texttt{s/step}: step into a function call
-  \item \texttt{n/next}: step over a function call
-  \item \texttt{nexti}: step through assembly.
-  \item \texttt{ENTER} : repeat the last command
-  \item \texttt{c/continue} : continue until next break/watch point or end of the program
-  \item \texttt{l/list}: list the source code
-  \item \texttt{q/quit}: quit the gdb
-\end{itemize}
-
-
-\subsubsection{Start gdb}
-You can run gdb with arguments or without arguments and add them once gdb is started or via an initialization file.
+\subsubsection{Starting gdb}
+GDB accepts a large nubmer of command-line arguments but you can run gdb without any arguments and add them once gdb is started or via an initialization file.
 
 
 \texttt{gdb} starts the debugger. But you need to add the program, running process later.
@@ -93,6 +80,22 @@ Examples;
 
     % TODO [vikki @22/08/26]: add a remote example. %
 
+\end{itemize}
+
+\subsection{Some of the most frequently needed gdb command}
+
+\begin{itemize}
+  \item \texttt{b/break}: add break points
+  \item \texttt{r/run}: execute the program
+  \item \texttt{w/watch}: add watch points
+  \item \texttt{p/print}: view the variables
+  \item \texttt{s/step}: step into a function call
+  \item \texttt{n/next}: step over a function call
+  \item \texttt{nexti}: step through assembly.
+  \item \texttt{ENTER} : repeat the last command
+  \item \texttt{c/continue} : continue until next break/watch point or end of the program
+  \item \texttt{l/list}: list the source code
+  \item \texttt{q/quit}: quit the gdb
 \end{itemize}
 
 

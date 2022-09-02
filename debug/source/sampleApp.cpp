@@ -12,7 +12,8 @@
 //                     g++ -g -c debug/source/multipleFiles2.cpp -o debug/obj/multipleFiles2.o
 //                     g++ -g debug/obj/multipleFiles1.o  debug/obj/multipleFiles2.o -o debug/bin/multipleFiles
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-#include "multipleFiles2.h"
+#include "include/sampleLibrary.h"
+#include <iostream>
 
 int add(int x, int y) {
   return (x+y);
@@ -26,10 +27,11 @@ float add(float x, float y) {
 int main() {
   add(1,2);
   add(1.0f,2.0f);
-  file2::add(1,2);
+  library::add(1,2);
   int sum{0};
   for (int i = 0; i < 10; ++i) {
    sum += i; 
   }
+  std::cout << "sample" << std::endl;
   return 0;
 }

@@ -8,9 +8,9 @@
 //      Version: 0.0.0
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
-#include "multipleFiles2.h"
+#include "include/sampleLibrary.h"
 
-namespace file2{
+namespace library{
   int add(int x, int y) {
     return x + y;
   }

@@ -1,3 +1,3 @@
-namespace file2{
+namespace library{
   int add(int, int);
   }
