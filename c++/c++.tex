@@ -66,5 +66,15 @@ A function overloading can be done with l-value and r-value
     \begin{itemize}
       \item Represents a temporary
     \end{itemize}
-  \item Created with \texttt{&&}
+    \item Created with \texttt{\&\&}
+\end{itemize}
+
+\subsection{ Copy \& Move Semantics} 
+\begin{itemize}
+    \item copy constructor create a copy of an object
+      \begin{itemize}
+        \item Not useful for a temprory objects, for example return from a function
+      \end{itemize}
+    \item Move constructor move the source object
+    \item Created with \texttt{\&\&}
 \end{itemize}

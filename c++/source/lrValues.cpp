@@ -6,7 +6,7 @@
 //  Modified by: vikki
 //  Modified on: 2022/08/20
 //      Version: 0.0.0
-//      compile: g++ ./c++/source/lrValues.cpp -o c++/bin/lrValues
+//      compile: change the directory to c++; make
 //      run    : ./c++/bin/lrValues
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 #include <iostream>
