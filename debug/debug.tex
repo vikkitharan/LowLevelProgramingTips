@@ -200,14 +200,21 @@ The syntax is \texttt{x/(number)(format)(unit\_size)<address>}
 
 \subsection{gdb script}
 
-Add any repetitive gdb command on a text file (example \texttt{init.gdb}) and call it when you start the gdb with \texttt{-x init.gdb}.
+Add any repetitive gdb command on a text file (example \texttt{init.gdb}) and call it when you start the gdb with \texttt{\$ gdb -x init.gdb}.
 gdb looks for \texttt{-x init.gdb} in the current directory, if not found and its parent directories.
 
 \begin{lstlisting} [language=bash,frame=single,caption=init.gdb,label=init.gdb]
-set logging file output.gdb
+set logging file gdb.log
+set logging overwrite
 set logging on
+file sampleApp
+add-symbol-file sampleLibrary.so
+set breakpoint pending on
+b sampleApp.cpp:31
+b sampleLibrary.cpp:14
+run
+layout split
 \end{lstlisting}
-% TODO [vikki @22/08/26]: check what set pagination off does %
 
 \subsection{gdb tui: Terminal User Interface}
 \texttt{(gdb) layout next} switches among different layouts, with source code and/or assembly
