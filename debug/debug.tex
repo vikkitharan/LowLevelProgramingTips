@@ -1,11 +1,241 @@
-\chapter{Debug} 
+\chapter{Debug}
+Here is my expericence, tips and tricks about debugging C/C++ programs.
+I used gdb, valgrind and other debuging tools more thand several years.
 
-\section{gdb} 
+\section{GDB: The GNU Debugger}
 
-\subsection{on terminal} 
 
-\subsection{gdb tui} 
+% TODO [vikki @22/08/24]: what gdb ref command does. %
 
-\subsection{gdb + vim} 
+From the man page, (\texttt{\$ man gdb});
 
-\section{Valgrind} 
+The purpose of a debugger such as GDB is to allow you to see what is going on ``inside'' another program while it executes -- or what another program was doing at the moment it crashed.
+
+GDB can do four main kinds of things (plus other things in support of these) to help you catch bugs in the act:
+
+\begin{enumerate}
+  \item Start your program, specifying anything that might affect its behavior.
+  \item Make your program stop on specified conditions.
+  \item Examine what has happened, when your program has stopped.
+  \item Change things in your program, so you can experiment with correcting the effects of one bug and go on to learn about another.
+\end{enumerate}
+
+You can use GDB to debug programs written in C, C++, Fortran and Modula-2.
+
+
+
+\subsection{Getting help}
+\begin{itemize}
+  \item \texttt{\$gdb --help} \\
+  \item \texttt{(gdb) help}
+    displays type of available help, worth trying
+  \item \texttt{man gdb}
+  \item \href{https://sourceware.org/gdb/download/onlinedocs/}{Dowload pdf version of Documentation for GDB}
+  \item \href{https://developer.apple.com/library/archive/documentation/DeveloperTools/gdb/gdb/gdb_toc.html}{html version of Documentation for GDB}
+
+\end{itemize}
+
+
+\subsection{Compile the code with debug information}
+\texttt{g++ -g3 -O0 debug/source/buildWithDebug.cpp -o debug/bin/buildWithDebug} compiles the source code with debug information.
+
+
+You can check if the binary is build with debug information and not stripped by \texttt{file debug/bin/buildWithDebug}.
+
+To compare how much the binary size increases by debug information you can use \texttt{ls -l debug/bin/buildWithDebug} with and without debug information.
+
+
+\subsubsection{Debugging Options}
+The compiler have large number option to build the source code with debug information.
+For extensive details about other options and support other debugger than gdb, please check \texttt{man g++} or \texttt{man g}.
+
+\subsubsection{Debugging Level}
+\begin{enumerate}
+  \item \texttt{-g} takes default level \texttt{-g2}
+  \item \texttt{-g0} produces no debug information at all.
+  \item \texttt{-g1} produces minimal information, enough for making backtraces in parts of the program that you don't plan to debug.  This includes descriptions of functions and external variables, and line number tables, but no information about local variables.
+  \item \texttt{-g2} produces enough for making backtraces in parts of the program that you  plan to debug.  This includes descriptions of functions and external variables, and line number tables, information about local variables.
+  \item \texttt{-g3} includes extra information, such as all the macro definitions present in the program.  Some debuggers support macro expansion when you use this option.
+\end{enumerate}
+
+For the best debugging, if possible compile the code without optimization option \texttt{-O0}.
+
+
+\subsubsection{Starting gdb}
+GDB accepts a large nubmer of command-line arguments but you can run gdb without any arguments and add them once gdb is started or via an initialization file.
+
+
+\texttt{gdb} starts the debugger. But you need to add the program, running process later.
+
+Examples;
+\begin{itemize}
+
+  \item \texttt{gdb debug/bin/multiFiles} \\
+    starts the gdb with program \texttt{debug/bin/multiFiles}.
+    (To build the multiple file example, see the comments on \texttt{debug/source/multipleFiles1.cpp}.)
+
+
+  \item \texttt{gdb -p processID} \\
+    starts the gdb with process \texttt{processID}.
+
+    % TODO [vikki @22/08/26]: add a remote example. %
+
+\end{itemize}
+
+\subsection{Some of the most frequently needed gdb command}
+
+\begin{itemize}
+  \item \texttt{b/break}: add break points
+  \item \texttt{r/run}: execute the program
+  \item \texttt{w/watch}: add watch points
+  \item \texttt{p/print}: view the variables
+  \item \texttt{s/step}: step into a function call
+  \item \texttt{n/next}: step over a function call
+  \item \texttt{nexti}: step through assembly.
+  \item \texttt{ENTER} : repeat the last command
+  \item \texttt{c/continue} : continue until next break/watch point or end of the program
+  \item \texttt{l/list}: list the source code
+  \item \texttt{q/quit}: quit the gdb
+\end{itemize}
+
+
+\subsubsection{Breakpoints}
+You can use \texttt{break} or simply \texttt{b} to set a breakpoint.
+
+Examples;
+\begin{itemize}
+  \item \texttt{break main} \\ 
+    sets a breakpoint at the \texttt{main()}. If there are many \texttt{functionName} functions then breaks points are set at each function.
+
+  \item \texttt{b add} \\
+    sets breakpoints at two \texttt{add()} of \texttt{debug/source/multipleFiles1.cpp} and \texttt{debug/source/multipleFiles2.cpp} -- add breakpoints at all name matching functions.
+
+  \item \texttt{b debug/source/multipleFiles2.cpp:15} \\
+    sets a breakpoint at the \texttt{15} in \texttt{debug/source/multipleFiles2.cpp}.
+
+  \item \texttt{b functionName thread 2} \\
+    sets a breakpoint at the \texttt{functionName} but gdb only stops when the \texttt{functionName} is executed by 2\textsuperscript{nd} thread.
+% TODO [vikki @22/08/25]: add multi thread example later. %
+  \item \texttt{b debug/source/multipleFiles1.cpp:32 if (sum == 6 || i > 8)} \\
+    sets a \textbf{conditional breakpoint} at \texttt{debug/source/multipleFiles1.cpp:32} if sum equals to 6 or i is greater than 8.
+\end{itemize}
+
+
+
+
+
+
+\subsubsection{Watch points}
+You can use \texttt{watch} or simply \texttt{w} to set a watch point.
+
+
+\texttt{w debug/source/multipleFiles1.cpp:32 i >= 5}, gdb stops when the \texttt{i} reaches 5.
+
+
+\subsubsection{Debug Core Dumps}
+Os dumps the memory content of the crashed process, for example segmentation failure.
+To debug the failed program
+% TODO [vikki @22/08/23]: add and example with conditional failure (accessing bad pointer). %
+
+\begin{enumerate}
+  \item capture the memory contents when the program crashes.
+  \begin{enumerate}
+    \item set \texttt{ulimit -c unlimited}, the default is 0.
+      Core dump may be huge file. So set back to 0 (\texttt{ulimit -c unlimited}) once the debug finishes.
+  \end{enumerate}
+\item Run the program as usual (without gdb). OS save the core file
+\item Start gdb with the program and the core file.
+\texttt{gdb ./a.out core}.
+The gdb stops at the failure point.
+\end{enumerate}
+
+\subsubsection{Debug libraries}
+\texttt{set environment LD\_PRELOAD=./shim.so}.
+
+\subsubsection{Debug child or parent process}
+\texttt{fork()} creates a new process.
+By default gdb debugs the parent process.
+To debug the child process \texttt{set follow-fork-mode child}.
+
+\subsubsection{Multi-thread program}
+\texttt{thread n} gdb command debug the n\textsuperscript{th} thread.
+
+\texttt{thread apply all bt} gdb prints all thread details when it stop at a break point.
+
+\texttt{thread apply all backtrace} gdb prints all thread backtrace details when it stop at a break point.
+
+\subsection{Examine data in the memory}
+% TODO [vikki @22/08/22]: Add a sample c++ code and commands. %
+
+The syntax is \texttt{x/(number)(format)(unit\_size)<address>}
+\begin{itemize}
+  \item \textit{number} optionally indicates that \textit{number} contiguous elements, beginning at \textit{address}, should be examined.
+    This is very useful for examining the contents of an array. By default, this argument is 1.
+    \textbf{Negative number is also acceptable} -- to examine previous elements.
+  \item \textit{format} indicates how data should be printed.
+    In most cases, this is the same character that you would use in a call to \texttt{printf()}.
+  \begin{itemize}
+    \item \textit{x} (default) hexadecimal format
+    \item \textit{i} print instructions
+    \item \textit{s} string
+  \end{itemize}
+  \item \textit{unit\_size} indicates the size of the data to examine.
+  \begin{itemize}
+    \item \textit{b} bytes
+    \item \textit{h} halfwords
+    \item \textit{w} words
+    \item \textit{g} giant
+    \item By default, this is bytes, which is perfect for examining instructions.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Examples:}
+
+\begin{enumerate}
+  \item \texttt{x/wu 0x40000}: to display word value format for an unsigned int on address 0x40000
+  \item \texttt{x/5wu 0x40000}: to display word value format for five contiguous unsigned int on address 0x40000
+  \item \texttt{x/-5wu ptr}: to display word value format for previous five contiguous unsigned int on address pointed by pointer \texttt{ptr}
+  \item \texttt{x/wu 0x40000}: to display word value format for an unsigned int on address 0x40000
+\end{enumerate}
+
+\subsection{gdb script}
+
+Add any repetitive gdb command on a text file (example \texttt{init.gdb}) and call it when you start the gdb with \texttt{\$ gdb -x init.gdb}.
+gdb looks for \texttt{-x init.gdb} in the current directory, if not found and its parent directories.
+
+\begin{lstlisting} [language=bash,frame=single,caption=init.gdb,label=init.gdb]
+set logging file gdb.log
+set logging overwrite
+set logging on
+file sampleApp
+add-symbol-file sampleLibrary.so
+set breakpoint pending on
+b sampleApp.cpp:31
+b sampleLibrary.cpp:14
+run
+layout split
+\end{lstlisting}
+
+\subsection{gdb tui: Terminal User Interface}
+\texttt{(gdb) layout next} switches among different layouts, with source code and/or assembly
+
+
+\subsection{gdb + vim}
+
+\section{Valgrind}
+
+
+\section{Reference}
+\begin{enumerate}
+  \item \href{https://www.youtube.com/watch?v=mfmXcbiRs0E&list=PL9IEJIKnBJjHGWPN_S9NS_Ky1-tC8ZrUI}{YouTube: Learn GDB in 60 seconds}
+
+  \item \href{https://www.youtube.com/watch?v=Dq8l1_-QgAc}{YouTube: Getting Started with Debugging using GDB | Find Bugs in Your Code with A Couple Easy Commands}
+
+  \item \href{https://www.google.com/url?q=https://cs.brown.edu/courses/cs033/docs/guides/gdb.pdf&sa=D&source=docs&ust=1661288718090053&usg=AOvVaw3EbYRk1zHStEJlu-FSbeiY}{gdb Cheatsheet}
+
+  \item \href{https://gcc.gnu.org/onlinedocs/gcc/index.html#toc-GCC-Command-Options}{Options for Debugging Your Program}
+
+  \item \href{https://sourceware.org/gdb/download/onlinedocs/}{Documentation for GDB}
+
+  \item \href{https://developers.redhat.com/blog/2021/04/30/the-gdb-developers-gnu-debugger-tutorial-part-1-getting-started-with-the-debugger#}{The GDB developer's GNU Debugger tutorial, Part 1: Getting started with the debugger}
+\end{enumerate}

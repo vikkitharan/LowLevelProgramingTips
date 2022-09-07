@@ -4,4 +4,4 @@ python/bin
 R/bin
 main.pdf
 main.aux
-main.log
+*.log
