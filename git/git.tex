@@ -1,7 +1,39 @@
 \chapter{Git}
 
+% TODO [vikki @22/08/22]: refer my google document slide. %
 \section{Configuration}
 
 \section{short cuts}
+
+\subsection{commit}
+Each commits is a story point -- telling the history of the change.
+
+A commit should have a single logical concept.
+
+A commit can be edit, modified or clan up by \texttt{rebase}~\ref{git_rebase} command.
+
+\subsection{Edit a commit}
+When I want to edit the last commit, I stage all necessary changes then I use \texttt{ git commit --amend --no-edit} command.
+
+
+\subsection{rebase} \label{git_rebase}
+Once a branch is ready to merge, I clean up the commits -- history of the changes. 
+
+
+\texttt{git checkout develop}, checkouts to \texttt{develop} branch.
+
+\texttt{git rebase -i master}, start the clean up commits after \texttt{master} branch.
+
+I check each commits, if there is more than single logical change, I split them.
+
+If I have multiple commits related to a single logical change, I rename the title of those commits.
+
+Then I rearrange the commits such that commits related to a logical change are group together.
+
+Finally I Combine multiple commits into a single commit.
+
+
+
+
 
 \section{hooks}
