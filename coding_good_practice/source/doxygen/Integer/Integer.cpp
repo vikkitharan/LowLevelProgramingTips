@@ -8,48 +8,63 @@
 //      Version: 0.0.0
 //-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
+/* Copyright (C) 
+ * 2022 - vikki
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * 
+ */
+
+
 #include "Integer.h"
 #include <iostream>
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: Integer ()
-//  Description: Default constructor
-//   Parameters: None.
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief default constructor
+ */
 Integer::Integer(){
   std::cout << "Integer()" << std::endl;
    _int_pt = new int();
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: Integer ()
-//  Description: constructor
-//   Parameters: 
-//              i: value
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief parameterized constructor
+ *
+ * @param i: value
+ */
 Integer::Integer(int i){
   std::cout << "Integer(int)" << std::endl;
    _int_pt = new int(i);
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: Integer ()
-//  Description: copy constructor
-//   Parameters: 
-//               &obj: reference object
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/**
+ * @brief copy constructor
+ *
+ * @param obj: reference object
+ */
 Integer::Integer(const Integer &obj){
   std::cout << "copy: Integer(const Integer &)" << std::endl;
   // new memory must be allocated
    _int_pt = new int(obj.getValue());
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: Integer ()
-//  Description: move constructor
-//   Parameters: 
-//              &&obj - r-vlaue reference object
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief move constructor
+ *
+ * @param obj: r-vlaue reference object
+ */
 Integer::Integer(Integer &&obj){
   std::cout << "move: Integer(Integer &&)" << std::endl;
   // existing memory is used
@@ -58,31 +73,28 @@ Integer::Integer(Integer &&obj){
    obj._int_pt = nullptr;
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: ~Integer ()
-//  Description: de constructor
-//   Parameters: object
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief de constructor
+ */
 Integer::~Integer(){
   std::cout << "~Integer()" << std::endl;
   delete _int_pt;
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: setValue ()
-//  Description: Set the value of _int_pt
-//   Parameters: 
-//              i : value
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief Set the value of _int_pt
+ *
+ * @param i: value
+ */
 void Integer::setValue(int i){
   *_int_pt = i;
 }
 
-/*++++++++++++++++++++++++++++++++ PUBLIC Function +++++++++++++++++++++++++/
-//     Function: getValue ()
-//  Description: Get the value of _int_pt
-//      Return : value of _int_pt
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/**
+ * @brief Get the value of _int_pt
+ *
+ * @return value of _int_pt
+ */
 int Integer::getValue() const{
   return(*_int_pt);
 }

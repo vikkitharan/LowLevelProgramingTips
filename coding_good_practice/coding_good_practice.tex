@@ -1,28 +1,53 @@
 \chapter{Good Coding Practices}
 
 
-\section{Coding standard} 
+\section{Coding standard}
 \subsection{clang-format}
 \subsection{vim integration}
 \subsection{automation - git hooks}
 
 
-\section{Static Error Check} 
+\section{Static Error Check}
 \subsection{clang-tidy}
 \subsection{vim integration}
 \subsection{automation - git hooks}
 
 \section{Documentation}
 \subsection{Doxygen}
-\texttt{sudo apt-get install doxygen} installs the doxygen.
 
 \subsubsection{Getting help}
-\texttt{doxygen --help} displays doxygen help page.
 
-\subsubsection{Generate a template configuration file}
+\begin{enumerate}
+  \item \texttt{doxygen --help} displays doxygen help page.
+  \item \href{https://doxygen.nl/manual/index.html}{Doxygen Manual}
+\end{enumerate}
+
+To install doxygen run:
+
+\texttt{sudo apt-get install doxygen}
+
+\subsubsection{Configuration file}
+
+To generate a template configuration file, use the following command.
+
+\texttt{ doxygen -g .doxygen\_template.conf}
+
+\subsubsection{Customize the configuration template}
+
+\subsubsection{Layout file}
 
 To generate documentation of source code, use the following command.
-\texttt{ doxygen -g .doxygen_template.conf}
+
+\texttt{ doxygen -l .doxygen\_template.conf}
+
+To include the layout update \texttt{LAYOUT\_FILE            = DoxygenLayout.xml} in \texttt{.doxygen\_template.conf} file.
+
+\subsubsection{Customize the layout}
+The output layout can be customized. The details are in \href{https://doxygen.nl/manual/customize.html}{Customizing the output}.
+
+\subsubsection{Adding documentation in vim}
+I Use \href{https://github.com/vim-scripts/DoxygenToolkit.vim}{DoxygenToolkit} plug in to add doxugen comments.
+
 
 \section{Reference}
 
