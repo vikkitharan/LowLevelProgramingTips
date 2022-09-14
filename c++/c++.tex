@@ -73,8 +73,26 @@ A function overloading can be done with l-value and r-value
 \begin{itemize}
     \item copy constructor create a copy of an object
       \begin{itemize}
-        \item Not useful for a temprory objects, for example return from a function
+        \item Not useful for a temporary objects, for example return from a function
       \end{itemize}
     \item Move constructor move the source object
     \item Created with \texttt{\&\&}
 \end{itemize}
+
+\subsection{Resource Management} 
+Constructor may acquire resources like pointer, file handler, socket, etc. 
+Subsequently, object copy, move and destruction must decide the resource management.
+For example, in the destruction the resources must be released. Coping and moving objects must handle the resources accordingly.
+
+\subsection{Rule of 5} 
+If a class has ownership semantics (a constructor acquire resources), then you must provide a user-defined and ensure proper handling of the underlying resources.
+\begin{itemize}
+  \item Destructor -- release the resources.
+  \item Copy constructor -- copies the resources.
+  \item Copy assignment operator -- copies the resources.
+  \item Move constructor -- moves the resources.
+  \item Move assignment operator -- moves the resources.
+\end{itemize}
+
+\subsection{Rule of 5} 
+% TODO [vikki @22/09/13]: under stand https://en.cppreference.com/w/cpp/language/rule_of_three %
