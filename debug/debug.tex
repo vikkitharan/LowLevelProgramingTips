@@ -222,6 +222,71 @@ layout split
 
 \subsection{gdb + vim}
 
+\section{Clang as a Compiler}%
+\label{sec:clang_as_a_compiler}
+\href{Clang as a Compiler}{https://clang.llvm.org/docs/index.html} 
+
+\subsection{Address Sanitizer}%
+\label{sec:address_sanitizer}
+\href{Address Sanitizer}{https://clang.llvm.org/docs/AddressSanitizer.html} 
+
+AddressSanitizer is a fast memory error detector. It consists of a compiler instrumentation module and a run-time library. The tool can detect the following types of bugs:
+
+\begin{itemize}
+  \item Out-of-bounds accesses to heap, stack and globals
+  \item Use-after-free
+  \item Use-after-return (clang flag -fsanitize-address-use-after-return=(never|runtime|always) default: runtime).
+
+
+    Enable with: ASAN\_OPTIONS=detect\_stack\_use\_after\_return=1 (already enabled on Linux).
+
+
+    Disable with: ASAN\_OPTIONS=detect\_stack\_use\_after\_return=0.
+  \item Use-after-scope (clang flag -fsanitize-address-use-after-scope)
+  \item Double-free, invalid free
+  \item Memory leaks (experimental)
+\end{itemize}
+
+Typical slowdown introduced by AddressSanitizer is 2x.
+
+\subsubsection{usage}%
+\label{ssub:usage}
+Simply compile and link your program with -fsanitize=address flag. 
+
+The AddressSanitizer run-time library should be linked to the final executable, so make sure to use clang (not ld) for the final link step.
+
+When linking shared libraries, the AddressSanitizer run-time is not linked, so -Wl,-z,defs may cause link errors (don’t use it with AddressSanitizer).
+
+To get a reasonable performance add -O1 or higher.
+
+To get nicer stack traces in error messages add -fno-omit-frame-pointer.
+
+To get perfect stack traces you may need to disable inlining (just use -O1) and tail call elimination (-fno-optimize-sibling-calls).
+
+
+
+\section{clang tools}
+Clang Tools are standalone command line (and potentially GUI) tools designed for use by C++ developers who are already using and enjoying Clang as their compiler. These tools provide developer-oriented functionality such as fast syntax checking, automatic formatting, refactoring, etc. \href{Clang 16.0.0git documentation}{https://clang.llvm.org/docs/ClangTools.html}.
+
+\subsection{clang-check}%
+\label{sub:clang_check}
+ClangCheck combines the LibTooling framework for running a Clang tool with the basic Clang diagnostics by syntax checking specific files in a fast, command line interface. It can also accept flags to re-display the diagnostics in different formats with different flags, suitable for use driving an IDE or editor. Furthermore, it can be used in fixit-mode to directly apply fixit-hints offered by clang. See How To Setup Clang Tooling For LLVM for instructions on how to setup and used clang-check.
+
+
+\href{How To Setup Clang Tooling For LLVM}{https://clang.llvm.org/docs/HowToSetupToolingForLLVM.html} 
+
+\subsection{clang-format}%
+\label{sub:clang_format}
+Clang-format is both a library and a stand-alone tool with the goal of automatically reformatting C++ sources files according to configurable style guides. To do so, clang-format uses Clang’s Lexer to transform an input file into a token stream and then changes all the whitespace around those tokens. The goal is for clang-format to serve both as a user tool (ideally with powerful IDE integrations) and as part of other refactoring tools, e.g. to do a reformatting of all the lines changed during a renaming.
+\href{ClangFormat}{https://clang.llvm.org/docs/ClangFormat.html} 
+
+
+\section{clang-tidy}%
+\label{sec:clang_tidy}
+clang-tidy is a clang-based C++ linter tool. It provides an extensible framework for building compiler-based static analyses detecting and fixing bug-prone patterns, performance, portability and maintainability issues.
+\href{clang-tidy}{https://clang.llvm.org/extra/clang-tidy/#id1} 
+
+
 \section{Valgrind}
 
 
