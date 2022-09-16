@@ -2,6 +2,20 @@
 
 % TODO [vikki @22/08/22]: refer my google document slide. %
 \section{Configuration}
+git has three level of configurations.
+\begin{enumerate}
+  \item \textit{local}: Local configs are only available for the current repo and stored in \texttt{.git/config} directory.
+  \item \textit{global}: Global configs are available for all repos for the current user and stored in \texttt{~/.gitconfig}.
+  \item \textit{system}: System configs are available for all the users and repos and stored in \texttt{/etc/gitconfig}.
+\end{enumerate}
+
+Running \texttt{git config comit.template ./.git/gitmessage.txt} from a git repo sets commit template message for the repo and it overwrites \texttt{global} and \texttt{system} user name.
+
+
+Running \texttt{git config --global comit.template ~/.dotfiles/gitmessage.txt} sets the commit template name for all repos and it overwrites \texttt{system} user name.
+
+
+Running \texttt{git config --system core.editor vim} sets the editor for all repos and users.
 
 \section{short cuts}
 
