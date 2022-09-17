@@ -4,8 +4,8 @@
 #               Create pdf file
 #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-pdflatex main.tex
+pdflatex -shell-escape main.tex
 
-pdflatex main.tex
+pdflatex -shell-escape main.tex
 
 xdg-open main.pdf

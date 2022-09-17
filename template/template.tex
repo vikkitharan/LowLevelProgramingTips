@@ -35,16 +35,46 @@ The \texttt{~} makes sure three is a space between Section and the reference num
 \end{enumerate}
 
 \section{Code section}
-\begin{lstlisting} [language=C,frame=single,caption=C code section,label=code1]
-int main() {
-  return 0;
-}
-\end{lstlisting}
+\texttt{minted} package includes formated code sections. 
+The code section can be embedded or from a file.
 
-\begin{lstlisting} [language=bash,frame=single,caption=bash code section,label=code1]
-set logging file output.gdb
-set logging on
-\end{lstlisting}
+\texttt{listing} package includes code sections with caption and lable.
+But it does not supporet formated code or code section from a file.
+
+So combining \texttt{minted} and \texttt{listing} gives us nice formated code section.
+
+
+\begin{listing}[!ht]
+\usemintedstyle{vim}
+\begin{minted}{bash}
+  export PAGER=~/source/vimpager/vimpager
+  alias less=$PAGER
+  alias zless=$PAGER
+  set -o vi
+  export EDITOR=vim
+  alias trim='~/bin/trim.sh'
+  alias ctag='ctags -L .files.txt --c-kinds=+px'
+  alias inkscape='UBUNTU_MENUPROXY=0 inkscape'
+
+  if [[ -f ~/.git-completion.bash ]]; then
+  source ~/.git-completion.bash
+  source ~/.git-prompt.sh
+  source /usr/share/bash-completion/completions/git
+  fi
+
+  #export PS1="\[\e[1;32m\e[40m\]\h \[\e[m\]|\W: "
+  #export PS1="$"
+\end{minted}
+\caption{embedded bash script}
+\label{embedded_code_section}
+\end{listing}
+
+\begin{listing}[!ht]
+\usemintedstyle{vim}
+\inputminted{cpp}{template/source/helloWorld.cpp}
+\caption{C++ code from a file}
+\label{file_code_section}
+\end{listing}
 
 \subsection{Figures}%
 \label{sub:figures}
