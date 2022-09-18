@@ -46,7 +46,7 @@ So combining \texttt{minted} and \texttt{listing} gives us nice formated code se
 
 \begin{listing}[!ht]
 \usemintedstyle{vim}
-\begin{minted}{bash}
+\begin{minted}[linenos]{bash}
   export PAGER=~/source/vimpager/vimpager
   alias less=$PAGER
   alias zless=$PAGER
@@ -71,7 +71,7 @@ So combining \texttt{minted} and \texttt{listing} gives us nice formated code se
 
 \begin{listing}[!ht]
 \usemintedstyle{vim}
-\inputminted{cpp}{template/source/helloWorld.cpp}
+  \inputminted[linenos]{cpp}{template/source/helloWorld.cpp}
 \caption{C++ code from a file}
 \label{file_code_section}
 \end{listing}
