@@ -1,15 +1,108 @@
 \chapter{Good Coding Practices}
 
 
-\section{Coding standard}
+\section{Coding Standard}
+
+\href{https://www.kernel.org/doc/html/v4.10/process/coding-style.html}{Linux kernel coding style} 
 \subsection{clang-format}
+
+\subsubsection{Install clang-format}%
+\texttt{sudo apt install clang-format-16} installs \texttt{clang-format-16}, it is the latest version avalable as I am wrting. 
+
+\subsubsection{Getting Help}%
+\label{ssub:getting_help}
+\texttt{clang-format --help}
+
+clangFormat is a set of tools that are built on top of LibFormat. The clangFormat implements automatic source code formatting based on Clang.
+
+clang-format is located in clang/tools/clang-format and can be used to format \texttt{C/C++/Java/JavaScript/JSON/Objective-C/Protobuf/C\#} code.
+
+
+When the desired code formatting style is different from the available options, the style can be customized using the \texttt{-style="\{key: value, ...\}"} option or by putting your style configuration in the \texttt{.clang-format} or \texttt{\_clang-format} file in your project`s directory and using \texttt{clang-format -style=file}.
+
+
+\href{https://clang.llvm.org/docs/ClangFormatStyleOptions.html#}{Clang-Format Style Options} 
+Clang-Format Style Options describes configurable formatting style options supported by LibFormat and ClangFormat.
+
+An easy way to create the \texttt{.clang-format} file is:
+\begin{minted}{bash}
+  $ clang-format -style=llvm -dump-config > .clang-format
+\end{minted}
+
+\href{https://github.com/torvalds/linux/blob/master/.clang-format}{Linux`s .clang-format file} 
+
+When using -style=file, clang-format for each input file will try to find the .clang-format file located in the closest parent directory of the input file. When the standard input is used, the search is started from the current directory.
+
+When using -style=file:<format\_file\_path>, clang-format for each input file will use the format file located at <format\_file\_path>. The path may be absolute or relative to the working directory.
+
+
+
+Disabling Formatting on a Piece of Code
+
+Clang-format understands also special comments that switch formatting in a delimited range. The code between a comment // clang-format off or /* clang-format off */ up to a comment // clang-format on or /* clang-format on */ will not be formatted. The comments themselves will be formatted (aligned) normally.
+
+
 \subsection{vim integration}
+From \href{https://clang.llvm.org/docs/ClangFormat.html}{ClangFormat},
+
+There is an integration for vim which lets you run the clang-format standalone tool on your current buffer, optionally selecting regions to reformat. The integration has the form of a python-file which can be found under \texttt{clang/tools/clang-format/clang-format.py}.
+
+This can be integrated by adding the following to your \texttt{.vimrc}:
+
+\begin{listing}[!ht]
+  \begin{minted}{vim}
+    map <C-K> :pyf <path-to-this-file>/clang-format.py<cr>
+    imap <C-K> <c-o>:pyf <path-to-this-file>/clang-format.py<cr>
+  \end{minted}
+  \caption{Format selected lindes in vim by clang-format.}
+  \label{vim.clang.format}
+\end{listing}
+
+
+The first line enables clang-format for NORMAL and VISUAL mode, the second line adds support for INSERT mode. Change “C-K” to another binding if you need clang-format on a different key (C-K stands for Ctrl+k).
+
+With this integration you can press the bound key and clang-format will format the current line in NORMAL and INSERT mode or the selected region in VISUAL mode. The line or region is extended to the next bigger syntactic entity.
+
+It operates on the current, potentially unsaved buffer and does not create or save any files. To revert a formatting, just undo.
+
+An alternative option is to format changes when saving a file and thus to have a zero-effort integration into the coding workflow. To do this, add this to your .vimrc:
+
+
+\begin{listing}[!ht]
+  \begin{minted}{vim}
+    function! Formatonsave()
+    let l:formatdiff = 1
+    pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
+    endfunction
+    autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+  \end{minted}
+  \caption{Format a buffer when write.}
+  \label{vim.clang.format.all.buffer}
+\end{listing}
+
+
+\subsubsection{Script for patch reformatting}%
+\label{ssub:script_for_patch_reformatting}
+
+
+The python script \texttt{clang/tools/clang-format/clang-format-diff.py} parses the output of a unified diff and reformats all contained lines with clang-format.
+
+Example usage for git users:
+
+
+\begin{minted}{bash}
+  $ git diff -U0 --no-color --relative HEAD^ | clang-format-diff.py -p1 -i
+\end{minted}
+
 \subsection{automation - git hooks}
+
 
 
 \section{Static Error Check}
 \subsection{clang-tidy}
 \subsection{vim integration}
+
+
 \subsection{automation - git hooks}
 
 \section{Documentation}
