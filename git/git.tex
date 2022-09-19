@@ -47,7 +47,22 @@ Then I rearrange the commits such that commits related to a logical change are g
 Finally I Combine multiple commits into a single commit.
 
 
+\section{Template Directory}%
+\label{sec:template_directory}
 
+\texttt{\$ git init} and \texttt{\$ git clone} copy files and directories whose name do not start with a ``.`` (dot) in the template directory into newly created \texttt{.git} directory, for example \texttt{.git/hooks}.
+
+The default template directory is \texttt{/usr/share/git-core/templates}.
+
+But user defined template directory can be set by one of the following (in order):
+\begin{itemize}
+  \item the argument given with the --template option;
+  \item the contents of the \texttt{\$GIT\_TEMPLATE\_DIR} environment variable;
+  \item the \texttt{init.templateDir} configuration variable; or
+\end{itemize}
+
+
+As dot files are not copied to new git repo, the template directory its self can be version controlled, \texttt{.git} directory or its contents will not be copied.
 
 
 \section{hooks}
