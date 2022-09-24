@@ -26,6 +26,26 @@ A commit should have a single logical concept.
 
 A commit can be edit, modified or clan up by \texttt{rebase}~\ref{git_rebase} command.
 
+\subsection{tag}
+\href{https://git-scm.com/book/en/v2/Git-Basics-Tagging}{git-scm.com: Tagging}
+Git has the ability to tag specific points in a repository’s history as being important. Typically, people use this functionality to mark release points (v1.0, v2.0 and so on).
+
+
+\subsubsection{Creating Tags}%
+\label{ssub:subsubsection_name}
+
+
+ Git supports two types of tags: lightweight and annotated.
+
+ A lightweight tag is very much like a branch that doesn`t change -- it`s just a pointer to a specific commit.
+
+ To create a lightweight tag, \texttt{git tag v1.0.0}.
+
+
+ Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, email, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+
+ To create a annotated tag, \texttt{git tag a  v1.0.0 -m "This is the alpha release"}.
+
 \subsection{Edit a commit}
 When I want to edit the last commit, I stage all necessary changes then I use \texttt{ git commit --amend --no-edit} command.
 
@@ -74,6 +94,11 @@ As dot files are not copied to new git repo, the template directory its self can
 \subsubsection{My git hooks}%
 
 \markdownInput{git/source/README.md}
+
+% TODO [vikki @22/09/20]: update git hooks to fix whitespace error. %
+%https://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-white-space-before-committing
+%https://snipplr.com/view/28523/git-precommit-hook-to-fix-trailing-whitespace
+%https://makandracards.com/makandra/11541-how-to-not-leave-trailing-whitespace-using-your-editor-or-git
 
 \subsubsection{Resources}%
 \begin{itemize}
