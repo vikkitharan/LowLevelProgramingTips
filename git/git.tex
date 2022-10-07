@@ -2,6 +2,20 @@
 
 % TODO [vikki @22/08/22]: refer my google document slide. %
 \section{Configuration}
+git has three level of configurations.
+\begin{enumerate}
+  \item \textit{local}: Local configs are only available for the current repo and stored in \texttt{.git/config} directory.
+  \item \textit{global}: Global configs are available for all repos for the current user and stored in \texttt{~/.gitconfig}.
+  \item \textit{system}: System configs are available for all the users and repos and stored in \texttt{/etc/gitconfig}.
+\end{enumerate}
+
+Running \texttt{git config comit.template ./.git/gitmessage.txt} from a git repo sets commit template message for the repo and it overwrites \texttt{global} and \texttt{system} user name.
+
+
+Running \texttt{git config --global comit.template ~/.dotfiles/gitmessage.txt} sets the commit template name for all repos and it overwrites \texttt{system} user name.
+
+
+Running \texttt{git config --system core.editor vim} sets the editor for all repos and users.
 
 \section{short cuts}
 
@@ -11,6 +25,26 @@ Each commits is a story point -- telling the history of the change.
 A commit should have a single logical concept.
 
 A commit can be edit, modified or clan up by \texttt{rebase}~\ref{git_rebase} command.
+
+\subsection{tag}
+\href{https://git-scm.com/book/en/v2/Git-Basics-Tagging}{git-scm.com: Tagging}
+Git has the ability to tag specific points in a repository’s history as being important. Typically, people use this functionality to mark release points (v1.0, v2.0 and so on).
+
+
+\subsubsection{Creating Tags}%
+\label{ssub:subsubsection_name}
+
+
+ Git supports two types of tags: lightweight and annotated.
+
+ A lightweight tag is very much like a branch that doesn`t change -- it`s just a pointer to a specific commit.
+
+ To create a lightweight tag, \texttt{git tag v1.0.0}.
+
+
+ Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, email, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+
+ To create a annotated tag, \texttt{git tag a  v1.0.0 -m "This is the alpha release"}.
 
 \subsection{Edit a commit}
 When I want to edit the last commit, I stage all necessary changes then I use \texttt{ git commit --amend --no-edit} command.
@@ -33,16 +67,40 @@ Then I rearrange the commits such that commits related to a logical change are g
 Finally I Combine multiple commits into a single commit.
 
 
+\section{Template Directory}%
+\label{sec:template_directory}
+
+\texttt{\$ git init} and \texttt{\$ git clone} copy files and directories whose name do not start with a ``.'' (dot) in the template directory into newly created \texttt{.git} directory, for example \texttt{.git/hooks}.
+
+The default template directory is \texttt{/usr/share/git-core/templates}.
+
+But user defined template directory can be set by one of the following (in order):
+\begin{itemize}
+  \item the argument given with the \texttt{\$ git init -{}-template absolute/path/of/template} or \texttt{\$ git clone -{}-template absolute/path/of/template}. NOTE path must be absolute ;
+  \item the contents of the \texttt{\$GIT\_TEMPLATE\_DIR} environment variable;
+  \item the \texttt{init.templateDir} configuration variable; or
+\end{itemize}
 
 
+As dot files are not copied to new git repo, the template directory its self can be version controlled, \texttt{.git} directory or its contents will not be copied.
 
-\section{hooks}
-\subsection{Getting Help}%
+
+\subsection{hooks}
+\subsubsection{Getting Help}%
 \begin{itemize}
   \item \texttt{\$ man githooks}
 \end{itemize}
 
-\subsection{Resources}%
+\subsubsection{My git hooks}%
+
+\markdownInput{git/source/README.md}
+
+% TODO [vikki @22/09/20]: update git hooks to fix whitespace error. %
+%https://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-white-space-before-committing
+%https://snipplr.com/view/28523/git-precommit-hook-to-fix-trailing-whitespace
+%https://makandracards.com/makandra/11541-how-to-not-leave-trailing-whitespace-using-your-editor-or-git
+
+\subsubsection{Resources}%
 \begin{itemize}
   \item \href{https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks}{Git Pro book, 8.3 Customizing Git - Git Hooks} 
   \item \href{https://www.atlassian.com/git/tutorials/git-hooks}{Atlassion: Git Hooks} 
