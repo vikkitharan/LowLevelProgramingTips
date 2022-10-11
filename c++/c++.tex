@@ -1,4 +1,5 @@
 \chapter{C++}
+\href{https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list}{The Definitive C++ Book Guide and List}
 
 \section{compile code} 
 % using g++/clang
@@ -94,5 +95,6 @@ If a class has ownership semantics (a constructor acquire resources), then you m
   \item Move assignment operator -- moves the resources.
 \end{itemize}
 
-\subsection{Rule of 5} 
+\subsection{Rule of 0}
+If a class does not has ownership semantics, then you should not provide a user-defined functions. The compiler will synthesize the ncecessary fuctions
 % TODO [vikki @22/09/13]: under stand https://en.cppreference.com/w/cpp/language/rule_of_three %
