@@ -1,2 +1,14 @@
 \chapter{Linux Kernal Modules}
 
+\section{Resources}
+
+\begin{enumerate}
+  \item \href{https://sysprog21.github.io/lkmpg/}{Book: The Linux Kernel Module Programming Guide}
+\end{enumerate}
+
+
+
+\section{Introduction}
+
+\subsection{What Is A Kernel Module?}
+Modules are pieces of code that can be loaded and unloaded into the kernel upon demand. They extend the functionality of the kernel without the need to reboot the system. For example, one type of module is the device driver, which allows the kernel to access hardware connected to the system. Without modules, we would have to build monolithic kernels and add new functionality directly into the kernel image. Besides having larger kernels, this has the disadvantage of requiring us to rebuild and reboot the kernel every time we want new functionality. 
